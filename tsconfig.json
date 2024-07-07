@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "es2022",
+        "allowJs": true,
+        "checkJs": false,
+        "moduleResolution": "node",
+        "target": "es2022",
+        "outDir": "./dist",
+    },
+    "include": [
+        "src/routines/**/*"
+    ],
+}
