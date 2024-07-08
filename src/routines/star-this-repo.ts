@@ -6,6 +6,7 @@ const notSignedIn = 2 as const;
 
 class StarThisRepo extends Routine {
   static displayName = "Star the Puppilot repository on GitHub";
+  static id = "dev.yuudi.puppilot-routines.star-this-repo";
 
   public async start(): Promise<JobResult> {
     const page = await this.getPage();

@@ -4,6 +4,7 @@ class StarThisRepo extends Routine {
   // metadatas
   static displayName = "A New Routine";
   // // optional metadatas
+  // static id = "io.github.<your-name>.<your-routine-id>"; // please follow java package naming convention
   // static author = "Your Name";
   // static reportEmail = "Your Email";
   // static reportUrl = "https://github.com/yuudi/puppilot-routines/issues/new/choose"; // or any other way to report issues

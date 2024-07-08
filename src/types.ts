@@ -23,6 +23,9 @@ export abstract class Routine {
   public static readonly reportEmail?: string;
   public static readonly reportUrl?: string;
   public static readonly description?: string;
+  public static get id(): string {
+    return btoa(this.displayName);
+  }
 
   constructor(
     protected getPage: () => Promise<Page>,
