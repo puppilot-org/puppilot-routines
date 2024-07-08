@@ -1,48 +1,24 @@
-import {
-  Checked,
-  CheckResult,
-  JobResult,
-  Page,
-  Paged,
-  Routine,
-  Store,
-  Stored,
-} from "../types";
+import { JobResult, Routine } from "../types";
 import { xpath } from "../utils";
 
-class BCoin implements Routine, Paged, Stored, Checked {
-  private store: Store;
-  private page: Page;
-
-  public initStore(store: Store) {
-    this.store = store;
-  }
-
-  public async check(): Promise<CheckResult> {
-    const nextAvailable = await this.store.get<number>("nextAvailable");
-    if (nextAvailable && nextAvailable > Date.now()) {
+class BCoin extends Routine {
+  static displayName = "B站年费大会员每月领取B币";
+  public async start(): Promise<JobResult> {
+    const store = await this.getStore();
+    const nextAvailableTime = await store.get<number>("nextAvailable");
+    if (nextAvailableTime && nextAvailableTime > Date.now()) {
       return {
         status: "skipped",
         message:
           "B币已领取过，下次领取时间：" +
-          new Date(nextAvailable).toLocaleString(),
+          new Date(nextAvailableTime).toLocaleString(),
       };
     }
-    return {
-      status: "continue",
-      message: "继续",
-    };
-  }
-
-  public async initPage(page: Page) {
-    this.page = page;
-  }
-
-  public async start(): Promise<JobResult> {
-    await this.page.goto("https://account.bilibili.com/account/big/myPackage");
-    const signedIn = this.page.locator("div.user-con.signin").map(() => true);
-    const notSignedIn = this.page.locator(".login__main").map(() => false);
-    const loginStatus = await this.page.locator.prototype
+    const page = await this.getPage();
+    await page.goto("https://account.bilibili.com/account/big/myPackage");
+    const signedIn = page.locator("div.user-con.signin").map(() => true);
+    const notSignedIn = page.locator(".login__main").map(() => false);
+    const loginStatus = await page.locator.prototype
       .race([signedIn, notSignedIn])
       .wait();
     if (!loginStatus) {
@@ -51,10 +27,10 @@ class BCoin implements Routine, Paged, Stored, Checked {
         message: "Not signed in",
       };
     }
-    const button = await this.page
+    const button = await page
       .locator(".bcoin-wrapper .coupon-btn")
       .waitHandle();
-    const nextAvailable = this.page
+    const nextAvailable = page
       .locator(
         xpath(
           '//div[@class="bcoin-wrapper"]//div[@class="coupon-content-con"]/div[@class="coupon-desc-tip"][3]',
@@ -69,7 +45,7 @@ class BCoin implements Routine, Paged, Stored, Checked {
     if (!buttonDisabled) {
       await button.click();
       // Wait for the button to be disabled
-      await this.page
+      await page
         .locator(".bcoin-wrapper .coupon-btn.coupon-btn-disabled")
         .wait();
       couponGot = true;
@@ -84,7 +60,7 @@ class BCoin implements Routine, Paged, Stored, Checked {
       };
     }
     const nextAvailableDate = new Date(nextAvailableDateText[0]);
-    await this.store.set("nextAvailable", nextAvailableDate.getTime());
+    await store.set("nextAvailable", nextAvailableDate.getTime());
 
     return couponGot
       ? {
@@ -99,4 +75,3 @@ class BCoin implements Routine, Paged, Stored, Checked {
 }
 
 export default BCoin;
-export const displayName = "B站年费大会员每月领取B币";

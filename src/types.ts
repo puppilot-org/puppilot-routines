@@ -1,15 +1,9 @@
 import { Page } from "puppeteer-core";
 
 type JobStatus = "completed" | "failed" | "skipped";
-type CheckStatus = JobStatus | "continue";
 
 export type JobResult = {
   status: JobStatus;
-  message: string;
-};
-
-export type CheckResult = {
-  status: CheckStatus;
   message: string;
 };
 
@@ -22,20 +16,17 @@ export interface Store {
   set(key: string, value: JSONValue): Promise<void>;
 }
 
-export interface Routine {
-  start(): Promise<JobResult>;
-}
+export abstract class Routine {
+  public static readonly displayName: string =
+    "Please override displayName in your routine";
+  public static readonly author?: string;
+  public static readonly reportEmail?: string;
+  public static readonly reportUrl?: string;
+  public static readonly description?: string;
 
-export interface Paged {
-  initPage(page: Page): void | Promise<void>;
+  constructor(
+    protected getPage: () => Promise<Page>,
+    protected getStore: () => Promise<Store>,
+  ) {}
+  public abstract start(): Promise<JobResult>;
 }
-
-export interface Stored {
-  initStore(store: Store): void | Promise<void>;
-}
-
-export interface Checked {
-  check(): Promise<CheckResult> | CheckResult;
-}
-
-export { Page };

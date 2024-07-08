@@ -1,14 +1,13 @@
 class V2exSign {
-  async initPage(page) {
-    this.page = page;
-  }
+  static displayName = "V2ex铜币领取";
 
   async start() {
-    await this.page.goto("https://v2ex.com/mission/daily");
+    const page = await this.getPage();
+    await page.goto("https://v2ex.com/mission/daily");
 
-    const signedIn = this.page.locator('a[href="/settings"]').map(() => true);
-    const notSignedIn = this.page.locator('a[href="/signin"]').map(() => false);
-    const loginStatus = await this.page.locator.prototype
+    const signedIn = page.locator('a[href="/settings"]').map(() => true);
+    const notSignedIn = page.locator('a[href="/signin"]').map(() => false);
+    const loginStatus = await page.locator.prototype
       .race([signedIn, notSignedIn])
       .wait();
     if (!loginStatus) {
@@ -18,11 +17,11 @@ class V2exSign {
       };
     }
 
-    const available$ = this.page
+    const available$ = page
       .locator('#Main input[value="领取 X 铜币"]')
       .click()
       .then(() => true);
-    const unavailable$ = this.page
+    const unavailable$ = page
       .locator('#Main input[value="查看我的账户余额"]')
       .wait()
       .then(() => false);
@@ -42,4 +41,3 @@ class V2exSign {
 }
 
 export default V2exSign;
-export const displayName = "V2ex铜币领取";

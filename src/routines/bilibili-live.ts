@@ -1,14 +1,11 @@
-import { JobResult, Page, Paged, Routine } from "../types";
+import { JobResult, Routine } from "../types";
 
-class BiliLive implements Routine, Paged {
-  private page: Page;
-
-  public initPage(page: Page) {
-    this.page = page;
-  }
+class BiliLive extends Routine {
+  static displayName = "bilibili直播签到";
 
   public async start(): Promise<JobResult> {
-    await this.page.goto("https://api.live.bilibili.com/sign/doSign", {
+    const page = await this.getPage();
+    await page.goto("https://api.live.bilibili.com/sign/doSign", {
       waitUntil: "domcontentloaded",
     });
     return {
@@ -18,4 +15,3 @@ class BiliLive implements Routine, Paged {
   }
 }
 export default BiliLive;
-export const displayName = "bilibili直播签到";

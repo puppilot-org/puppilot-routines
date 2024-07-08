@@ -1,6 +1,7 @@
 const path = require("path");
 
 module.exports = {
+  mode: "production",
   module: {
     rules: [
       {
@@ -11,10 +12,11 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".ts", ".js"],
+    fallback: { path: false },
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve("dist"),
     library: {
       type: "module",
     },

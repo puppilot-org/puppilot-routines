@@ -1,18 +1,12 @@
-import { JobResult, Page, Paged, Routine } from "../types";
+import { JobResult, Routine } from "../types";
 import { Fetcher } from "../utils";
 
-class Tieba implements Routine, Paged {
-  private page: Page;
-
-  constructor() {}
-
-  public initPage(page: Page) {
-    this.page = page;
-  }
-
+class Tieba extends Routine {
+  static displayName = "贴吧签到";
   public async start(): Promise<JobResult> {
-    await this.page.goto("https://tieba.baidu.com/robots.txt");
-    const fetcher = new Fetcher(this.page);
+    const page = await this.getPage();
+    await page.goto("https://tieba.baidu.com/robots.txt");
+    const fetcher = new Fetcher(page);
     const userinfoRes = await fetcher.fetch(
       "https://tieba.baidu.com/f/user/json_userinfo",
     );
@@ -41,11 +35,10 @@ class Tieba implements Routine, Paged {
     }
 
     return {
-        status: "completed",
-        message: "签到成功",
-    }
+      status: "completed",
+      message: "签到成功",
+    };
   }
 }
 
 export default Tieba;
-export const displayName = "贴吧签到";
