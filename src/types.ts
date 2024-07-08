@@ -1,6 +1,6 @@
 import { Page } from "puppeteer-core";
 
-type JobStatus = "completed" | "failed" | "skipped";
+type JobStatus = "completed" | "failed" | "skipped" | "error";
 
 export type JobResult = {
   status: JobStatus;
@@ -23,6 +23,7 @@ export abstract class Routine {
   public static readonly reportEmail?: string;
   public static readonly reportUrl?: string;
   public static readonly description?: string;
+  public static readonly timeLimit: number = 120_000; // 2 minutes
   public static get id(): string {
     return btoa(this.displayName);
   }

@@ -4,6 +4,7 @@ class StarThisRepo extends Routine {
   // metadatas
   static displayName = "A New Routine";
   // // optional metadatas
+  // static timeLimit = 2 * 60_000; // 2 minute
   // static id = "io.github.<your-name>.<your-routine-id>"; // please follow java package naming convention
   // static author = "Your Name";
   // static reportEmail = "Your Email";
