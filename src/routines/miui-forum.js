@@ -2,6 +2,7 @@ import { Routine } from "../types";
 
 export default class extends Routine {
   static displayName = "MIUI论坛签到";
+  static id = "io.github.yuudi.puppilot-routines.miui-forum";
 
   async start() {
     this.page = await this.getPage();

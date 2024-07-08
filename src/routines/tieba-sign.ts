@@ -3,6 +3,7 @@ import { Fetcher } from "../utils";
 
 class Tieba extends Routine {
   static displayName = "贴吧签到";
+  static id = "io.github.yuudi.puppilot-routines.tieba-sign";
   public async start(): Promise<JobResult> {
     const page = await this.getPage();
     await page.goto("https://tieba.baidu.com/robots.txt");

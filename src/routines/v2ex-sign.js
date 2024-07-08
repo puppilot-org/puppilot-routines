@@ -1,5 +1,8 @@
-class V2exSign {
+import { Routine } from "../types";
+
+class V2exSign extends Routine {
   static displayName = "V2ex铜币领取";
+  static id = "io.github.yuudi.puppilot-routines.v2ex-sign";
 
   async start() {
     const page = await this.getPage();

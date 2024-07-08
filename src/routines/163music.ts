@@ -2,6 +2,7 @@ import { JobResult, Routine } from "../types";
 
 export default class extends Routine {
   static displayName = "网易云音乐签到";
+  static id = "io.github.yuudi.puppilot-routines.163music";
 
   public async start(): Promise<JobResult> {
     const page = await this.getPage();

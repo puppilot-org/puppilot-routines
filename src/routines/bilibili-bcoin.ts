@@ -3,6 +3,7 @@ import { xpath } from "../utils";
 
 class BCoin extends Routine {
   static displayName = "B站年费大会员每月领取B币";
+  static id = "io.github.yuudi.puppilot-routines.bilibili-bcoin";
   public async start(): Promise<JobResult> {
     const store = await this.getStore();
     const nextAvailableTime = await store.get<number>("nextAvailable");
