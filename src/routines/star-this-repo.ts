@@ -1,8 +1,8 @@
 import { JobResult, Routine } from "../types";
 
-const starred = 0 as const;
-const unstarred = 1 as const;
-const notSignedIn = 2 as const;
+const starred = 0;
+const unstarred = 1;
+const notSignedIn = 2;
 
 class StarThisRepo extends Routine {
   static displayName = "Star the Puppilot repository on GitHub";
@@ -45,7 +45,7 @@ class StarThisRepo extends Routine {
         message: "already starred",
       };
     }
-    await statusResult.button.click();
+    await statusResult.button?.click();
     await page.waitForSelector(".starred.BtnGroup", {
       visible: true,
     });

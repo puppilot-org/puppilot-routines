@@ -4,9 +4,15 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default [
-  { files: ["**/*.{js,mjs,cjs,ts}"] },
-  { languageOptions: { globals: globals.node } },
+  { files: ["src/**/*.{js,ts}"] },
+  {
+    languageOptions: {
+      globals: globals.node,
+      parserOptions: { project: ["tsconfig.json"] },
+    },
+  },
   pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.strictTypeChecked,
+  ...tseslint.configs.stylistic,
   eslintPluginPrettierRecommended,
 ];

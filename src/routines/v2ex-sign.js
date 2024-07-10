@@ -1,3 +1,4 @@
+import { Locator } from "puppeteer-core";
 import { Routine } from "../types";
 
 class V2exSign extends Routine {
@@ -10,9 +11,8 @@ class V2exSign extends Routine {
 
     const signedIn = page.locator('a[href="/settings"]').map(() => true);
     const notSignedIn = page.locator('a[href="/signin"]').map(() => false);
-    const loginStatus = await page.locator.prototype
-      .race([signedIn, notSignedIn])
-      .wait();
+
+    const loginStatus = await Locator.race([signedIn, notSignedIn]).wait();
     if (!loginStatus) {
       return {
         status: "failed",

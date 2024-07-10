@@ -12,8 +12,8 @@ class StarThisRepo extends Routine {
   // static description = `A new routine to do something, it helps you to do something, but it's not implemented yet`;
 
   public async start(): Promise<JobResult> {
-    // // initialize the page
-    // const page = await this.getPage();
+    // initialize the page
+    const page = await this.getPage();
 
     // // go to the website
     // await page.goto("https://github.com/");
@@ -30,6 +30,8 @@ class StarThisRepo extends Routine {
     //   status: "completed",
     //   message: "Starred the repository",
     // };
+
+    await page.close();
     return {
       status: "skipped",
       message: "Not implemented yet",

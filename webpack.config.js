@@ -15,6 +15,10 @@ module.exports = {
     extensions: [".ts", ".js"],
     fallback: { path: false },
   },
+  externals: {
+    puppeteer: "puppeteer-core",
+    "puppeteer-core": "puppeteer-core",
+  },
   output: {
     path: path.resolve("dist"),
     library: {

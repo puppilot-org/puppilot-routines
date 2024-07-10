@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./src ",
-    "lint:fix": "eslint ./src --fix"
+    "lint:fix": "eslint ./src --fix",
+    "webpack": "webpack"
   },
   "dependencies": {
     "ts-loader": "^9.5.1",

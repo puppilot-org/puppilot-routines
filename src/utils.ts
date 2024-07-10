@@ -9,9 +9,7 @@ export function xpath(xpath: string) {
 }
 
 export class Fetcher {
-  constructor(public readonly page: Page) {
-    page.setBypassCSP(true);
-  }
+  constructor(public readonly page: Page) {}
 
   public async fetch(
     input: string | URL | globalThis.Request,

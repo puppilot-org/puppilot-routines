@@ -2,14 +2,23 @@ import { Page } from "puppeteer-core";
 
 type JobStatus = "completed" | "failed" | "skipped" | "error";
 
-export type JobResult = {
+export interface JobResult {
   status: JobStatus;
   message: string;
-};
+}
 
-type JSONValue = string | number | boolean | null | JSONObject | JSONArray;
-type JSONObject = { [key: string]: JSONValue };
+// eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style, @typescript-eslint/consistent-type-definitions
+type JSONObject = {
+  [key: string]: JSONValue;
+};
 type JSONArray = JSONValue[];
+export type JSONValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JSONObject
+  | JSONArray;
 
 export interface Store {
   get<T extends JSONValue>(key: string): Promise<T>;
@@ -17,8 +26,9 @@ export interface Store {
 }
 
 export abstract class Routine {
-  public static readonly displayName: string =
-    "Please override displayName in your routine";
+  public static get displayName(): string {
+    throw new Error("Please override displayName in your own routine");
+  }
   public static readonly author?: string;
   public static readonly reportEmail?: string;
   public static readonly reportUrl?: string;
@@ -29,8 +39,8 @@ export abstract class Routine {
   }
 
   constructor(
-    protected getPage: () => Promise<Page>,
-    protected getStore: () => Promise<Store>,
+    protected getPage: () => Promise<Page> | Page,
+    protected getStore: () => Promise<Store> | Store,
   ) {}
   public abstract start(): Promise<JobResult>;
 }

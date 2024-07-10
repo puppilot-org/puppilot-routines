@@ -23,11 +23,31 @@ class Tieba extends Routine {
     );
     const mylike = await mylikeRes.text();
     const bas = mylike.match(/href="\/f\?kw=[^"]+" title="([^"]+)"/g);
+    if (!bas) {
+      return {
+        status: "failed",
+        message: "获取关注的贴吧失败",
+      };
+    }
     const tbsRes = await fetcher.fetch("http://tieba.baidu.com/dc/common/tbs");
-    const { tbs } = await tbsRes.json();
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    const tbs: string = (await tbsRes.json())?.tbs;
+    if (!tbs) {
+      return {
+        status: "failed",
+        message: "获取tbs失败",
+      };
+    }
 
     for (const ba of bas) {
       const title = /href="\/f\?kw=[^"]+" title="([^"]+)"/.exec(ba);
+      if (!title) {
+        return {
+          status: "failed",
+          message: "获取贴吧标题失败",
+        };
+      }
       const payload = "ie=utf-8&kw=" + encodeURI(title[1]) + "&tbs=" + tbs;
       await fetcher.fetch("http://tieba.baidu.com/sign/add", {
         method: "POST",

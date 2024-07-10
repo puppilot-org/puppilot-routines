@@ -1,3 +1,4 @@
+import { Locator } from "puppeteer-core";
 import { JobResult, Routine } from "../types";
 import { xpath } from "../utils";
 
@@ -19,9 +20,7 @@ class BCoin extends Routine {
     await page.goto("https://account.bilibili.com/account/big/myPackage");
     const signedIn = page.locator("div.user-con.signin").map(() => true);
     const notSignedIn = page.locator(".login__main").map(() => false);
-    const loginStatus = await page.locator.prototype
-      .race([signedIn, notSignedIn])
-      .wait();
+    const loginStatus = await Locator.race([signedIn, notSignedIn]).wait();
     if (!loginStatus) {
       return {
         status: "failed",
@@ -52,7 +51,7 @@ class BCoin extends Routine {
       couponGot = true;
     }
 
-    const nextAvailableText = await nextAvailable.wait();
+    const nextAvailableText = (await nextAvailable.wait()) ?? "";
     const nextAvailableDateText = /\d{4}\/\d{2}\/\d{2}/.exec(nextAvailableText);
     if (!nextAvailableDateText) {
       return {
