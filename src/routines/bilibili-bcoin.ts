@@ -1,5 +1,5 @@
 import { Locator } from "puppeteer-core";
-import { JobResult, Routine } from "../types";
+import { JobResult, Routine } from "puppilot-routine-base";
 import { xpath } from "../utils";
 
 class BCoin extends Routine {

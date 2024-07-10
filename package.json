@@ -10,6 +10,7 @@
     "webpack": "webpack"
   },
   "dependencies": {
+    "puppilot-routine-base": "github:puppilot-org/puppilot-routine-base",
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.3",
     "webpack": "^5.92.1",

@@ -1,4 +1,4 @@
-import { Routine } from "../types";
+import { Routine } from "puppilot-routine-base";
 
 export default class extends Routine {
   static displayName = "MIUI论坛签到";

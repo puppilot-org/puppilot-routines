@@ -1,4 +1,4 @@
-import { JobResult, Routine } from "../types";
+import { JobResult, Routine } from "puppilot-routine-base";
 
 export default class extends Routine {
   static displayName = "网易云音乐签到";

@@ -18,6 +18,7 @@ module.exports = {
   externals: {
     puppeteer: "puppeteer-core",
     "puppeteer-core": "puppeteer-core",
+    "puppilot-routine-base": "puppilot-routine-base",
   },
   output: {
     path: path.resolve("dist"),

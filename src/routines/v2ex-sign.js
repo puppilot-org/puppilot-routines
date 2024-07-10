@@ -1,5 +1,5 @@
 import { Locator } from "puppeteer-core";
-import { Routine } from "../types";
+import { Routine } from "puppilot-routine-base";
 
 class V2exSign extends Routine {
   static displayName = "V2ex铜币领取";

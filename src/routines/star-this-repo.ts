@@ -1,4 +1,4 @@
-import { JobResult, Routine } from "../types";
+import { JobResult, Routine } from "puppilot-routine-base";
 
 const starred = 0;
 const unstarred = 1;

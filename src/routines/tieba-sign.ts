@@ -1,4 +1,4 @@
-import { JobResult, Routine } from "../types";
+import { JobResult, Routine } from "puppilot-routine-base";
 import { Fetcher } from "../utils";
 
 class Tieba extends Routine {
