@@ -3,6 +3,7 @@ import { JobResult, Routine } from "puppilot-routine-base";
 class StarThisRepo extends Routine {
   // metadatas
   static displayName = "A New Routine";
+  static readonly version = "v0.1.0";
   // // optional metadatas
   // static timeLimit = 2 * 60_000; // 2 minute
   // static id = "io.github.<your-name>.<your-routine-id>"; // please follow java package naming convention

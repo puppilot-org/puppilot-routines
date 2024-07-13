@@ -5,6 +5,7 @@ import { xpath } from "../utils";
 class BCoin extends Routine {
   static displayName = "B站年费大会员每月领取B币";
   static id = "io.github.yuudi.puppilot-routines.bilibili-bcoin";
+  static readonly version = "v1.0.0";
   static description =
     "领取B站年费大会员每月赠送的B币，并记录下次领取时间，在这个时间前运行则跳过任务";
   public async start(): Promise<JobResult> {

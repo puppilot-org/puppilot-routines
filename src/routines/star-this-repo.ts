@@ -7,6 +7,7 @@ const notSignedIn = 2;
 class StarThisRepo extends Routine {
   static displayName = "Star the Puppilot repository on GitHub";
   static id = "dev.yuudi.puppilot-routines.star-this-repo";
+  static readonly version = "v1.0.0";
   static description =
     '(example routine) Star the "puppilot" repository on GitHub';
 
