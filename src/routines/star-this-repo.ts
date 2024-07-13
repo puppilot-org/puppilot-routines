@@ -7,11 +7,13 @@ const notSignedIn = 2;
 class StarThisRepo extends Routine {
   static displayName = "Star the Puppilot repository on GitHub";
   static id = "dev.yuudi.puppilot-routines.star-this-repo";
+  static description =
+    '(example routine) Star the "puppilot" repository on GitHub';
 
   public async start(): Promise<JobResult> {
     const page = await this.getPage();
 
-    await page.goto("https://github.com/yuudi/puppilot-routines");
+    await page.goto("https://github.com/puppilot-org/puppilot");
     // three possible statuses: starred, unstarred, notSignedIn
     const starButton$ = page
       .waitForSelector(".unstarred.BtnGroup > form > button", {
