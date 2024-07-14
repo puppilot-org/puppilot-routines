@@ -1,22 +1,15 @@
 {
   "name": "puppilot-routines",
-  "version": "0.1.0",
-  "license": "MIT",
-  "author": "yuudi",
   "type": "module",
-  "main": "index.js",
   "scripts": {
     "build": "bash ./build.sh",
     "lint": "eslint ./src ",
     "lint:fix": "eslint ./src --fix",
-    "webpack": "webpack"
+    "esbuild": "esbuild --minify --bundle --outdir=./dist/routines --target=node20 --format=esm --charset=utf8 --external:puppeteer-core --external:puppilot-routine-base"
   },
   "dependencies": {
-    "puppilot-routine-base": "github:puppilot-org/puppilot-routine-base",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.5.3",
-    "webpack": "^5.92.1",
-    "webpack-cli": "^5.1.4"
+    "esbuild": "~0.23.0",
+    "puppilot-routine-base": "github:puppilot-org/puppilot-routine-base"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
@@ -26,6 +19,7 @@
     "prettier-plugin-organize-imports": "^4.0.0",
     "prettier-plugin-packagejson": "^2.5.0",
     "puppeteer-core": "^22.12.1",
+    "typescript": "^5.5.3",
     "typescript-eslint": "^7.15.0"
   }
 }

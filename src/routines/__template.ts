@@ -1,6 +1,6 @@
 import { JobResult, Routine } from "puppilot-routine-base";
 
-class StarThisRepo extends Routine {
+class MyNewRoutine extends Routine {
   // metadatas
   static readonly displayName = "A New Routine";
   static readonly version = "0.1.0";
@@ -40,4 +40,4 @@ class StarThisRepo extends Routine {
   }
 }
 
-export default StarThisRepo;
+export default MyNewRoutine;
