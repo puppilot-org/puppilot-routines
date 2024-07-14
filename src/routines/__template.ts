@@ -2,15 +2,15 @@ import { JobResult, Routine } from "puppilot-routine-base";
 
 class StarThisRepo extends Routine {
   // metadatas
-  static displayName = "A New Routine";
-  static readonly version = "v0.1.0";
+  static readonly displayName = "A New Routine";
+  static readonly version = "0.1.0";
   // // optional metadatas
-  // static timeLimit = 2 * 60_000; // 2 minute
-  // static id = "io.github.<your-name>.<your-routine-id>"; // please follow java package naming convention
-  // static author = "Your Name";
-  // static reportEmail = "Your Email";
-  // static reportUrl = "https://github.com/yuudi/puppilot-routines/issues/new/choose"; // or any other way to report issues
-  // static description = `A new routine to do something, it helps you to do something, but it's not implemented yet`;
+  // static readonly timeLimit = 2 * 60_000; // 2 minute
+  // static readonly id = "io.github.<your-name>.<your-routine-id>"; // please follow java package naming convention
+  // static readonly author = "Your Name";
+  // static readonly reportEmail = "Your Email";
+  // static readonly reportUrl = "https://github.com/puppilot-org/puppilot-routines/issues/new/choose"; // or any other way to report issues
+  // static readonly description = `A new routine to do something, it helps you to do something, but it's not implemented yet`;
 
   public async start(): Promise<JobResult> {
     // initialize the page

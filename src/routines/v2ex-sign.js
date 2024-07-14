@@ -4,7 +4,7 @@ import { Routine } from "puppilot-routine-base";
 class V2exSign extends Routine {
   static displayName = "V2ex铜币领取";
   static id = "io.github.yuudi.puppilot-routines.v2ex-sign";
-  static version = "v1.0.0";
+  static version = "1.0.0";
 
   async start() {
     const page = await this.getPage();

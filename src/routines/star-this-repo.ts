@@ -1,13 +1,16 @@
 import { JobResult, Routine } from "puppilot-routine-base";
 
-const starred = 0;
-const unstarred = 1;
-const notSignedIn = 2;
+const enum StarStatus {
+  Starred,
+  Unstarred,
+  NotSignedIn,
+}
 
 class StarThisRepo extends Routine {
   static displayName = "Star the Puppilot repository on GitHub";
   static id = "dev.yuudi.puppilot-routines.star-this-repo";
-  static readonly version = "v1.0.0";
+  static author = "yuudi";
+  static version = "1.0.0";
   static description =
     '(example routine) Star the "puppilot" repository on GitHub';
 
@@ -20,29 +23,29 @@ class StarThisRepo extends Routine {
       .waitForSelector(".unstarred.BtnGroup > form > button", {
         visible: true,
       })
-      .then((button) => ({ button, status: unstarred }));
+      .then((button) => ({ button, status: StarStatus.Unstarred as const }));
     const unstarButton$ = page
       .waitForSelector(".starred.BtnGroup > form > button", {
         visible: true,
       })
-      .then((button) => ({ button, status: starred }));
+      .then((button) => ({ button, status: StarStatus.Starred as const }));
     const signInButton$ = page
       .waitForSelector(".HeaderMenu-link--sign-in", {
         visible: true,
       })
-      .then((button) => ({ button, status: notSignedIn }));
+      .then((button) => ({ button, status: StarStatus.NotSignedIn as const }));
     const statusResult = await Promise.any([
       starButton$,
       unstarButton$,
       signInButton$,
     ]);
-    if (statusResult.status === notSignedIn) {
+    if (statusResult.status === StarStatus.NotSignedIn) {
       return {
         status: "failed",
         message: "Not signed in",
       };
     }
-    if (statusResult.status === starred) {
+    if (statusResult.status === StarStatus.Starred) {
       return {
         status: "skipped",
         message: "already starred",

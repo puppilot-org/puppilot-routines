@@ -3,6 +3,7 @@ import { Routine } from "puppilot-routine-base";
 export default class extends Routine {
   static displayName = "MIUI论坛签到";
   static id = "io.github.yuudi.puppilot-routines.miui-forum";
+  static version = "0.1.0";
 
   async start() {
     this.page = await this.getPage();

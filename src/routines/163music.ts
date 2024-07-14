@@ -3,6 +3,7 @@ import { JobResult, Routine } from "puppilot-routine-base";
 export default class extends Routine {
   static displayName = "网易云音乐签到";
   static id = "io.github.yuudi.puppilot-routines.163music";
+  static version = "0.1.0";
 
   public async start(): Promise<JobResult> {
     const page = await this.getPage();

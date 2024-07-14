@@ -3,6 +3,7 @@ import { JobResult, Routine } from "puppilot-routine-base";
 class BiliLive extends Routine {
   static displayName = "bilibili直播签到";
   static id = "io.github.yuudi.puppilot-routines.bilibili-live";
+  static version = "0.1.0";
 
   public async start(): Promise<JobResult> {
     const page = await this.getPage();
