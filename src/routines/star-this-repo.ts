@@ -15,10 +15,23 @@ class StarThisRepo extends Routine {
     '(example routine) Star the "puppilot" repository on GitHub';
 
   public async start(): Promise<JobResult> {
+    // before starting the routine, check if the we already starred the repository
+    const store = await this.getStore();
+    const starred = await store.get<boolean>("starred");
+    if (starred) {
+      return {
+        status: "skipped",
+        message: "Already starred the repository",
+      };
+    }
+
+    // start the routine
+    // create a new page
     const page = await this.getPage();
 
     await page.goto("https://github.com/puppilot-org/puppilot");
     // three possible statuses: starred, unstarred, notSignedIn
+    // we use three promises to wait for the three possible statuses
     const starButton$ = page
       .waitForSelector(".unstarred.BtnGroup > form > button", {
         visible: true,
@@ -34,11 +47,13 @@ class StarThisRepo extends Routine {
         visible: true,
       })
       .then((button) => ({ button, status: StarStatus.NotSignedIn as const }));
+    // wait for any of the three promises to resolve
     const statusResult = await Promise.any([
       starButton$,
       unstarButton$,
       signInButton$,
     ]);
+    // handle the resolved promise
     if (statusResult.status === StarStatus.NotSignedIn) {
       return {
         status: "failed",
@@ -51,10 +66,15 @@ class StarThisRepo extends Routine {
         message: "already starred",
       };
     }
+    // click the star button
     await statusResult.button?.click();
+    // wait for the star button to change to already starred
     await page.waitForSelector(".starred.BtnGroup", {
       visible: true,
     });
+    // set the starred status in the store
+    await store.set("starred", true);
+    // 🎉
     return {
       status: "completed",
       message: "Starred the repository",
