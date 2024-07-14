@@ -1,12 +1,13 @@
-import { JobResult, Routine } from "puppilot-routine-base";
+import { RoutineFunc } from "../types";
 
-class BiliLive extends Routine {
-  static displayName = "bilibili直播签到";
-  static id = "io.github.yuudi.puppilot-routines.bilibili-live";
-  static version = "0.1.0";
+const biliLive: RoutineFunc = () => ({
+  displayName: "bilibili直播签到",
+  version: "0.1.0",
+  id: "io.github.yuudi.puppilot-routines.bilibili-live",
 
-  public async start(): Promise<JobResult> {
-    const page = await this.getPage();
+  start: async ({ getPage }) => {
+    const page = await getPage();
+
     await page.goto("https://api.live.bilibili.com/sign/doSign", {
       waitUntil: "domcontentloaded",
     });
@@ -14,6 +15,7 @@ class BiliLive extends Routine {
       status: "completed",
       message: "签到成功",
     };
-  }
-}
-export default BiliLive;
+  },
+});
+
+export default biliLive;

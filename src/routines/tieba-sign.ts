@@ -1,12 +1,12 @@
-import { JobResult, Routine } from "puppilot-routine-base";
+import { JobResult, RoutineFunc } from "../types";
 import { Fetcher } from "../utils";
 
-class Tieba extends Routine {
-  static displayName = "贴吧签到";
-  static id = "io.github.yuudi.puppilot-routines.tieba-sign";
-  static version = "0.1.0";
-  public async start(): Promise<JobResult> {
-    const page = await this.getPage();
+const tieba: RoutineFunc = () => ({
+  displayName: "贴吧签到",
+  id: "io.github.yuudi.puppilot-routines.tieba-sign",
+  version: "0.1.0",
+  async start({ getPage }): Promise<JobResult> {
+    const page = await getPage();
     await page.goto("https://tieba.baidu.com/robots.txt");
     const fetcher = new Fetcher(page);
     const userinfoRes = await fetcher.fetch(
@@ -60,7 +60,7 @@ class Tieba extends Routine {
       status: "completed",
       message: "签到成功",
     };
-  }
-}
+  },
+});
 
-export default Tieba;
+export default tieba;

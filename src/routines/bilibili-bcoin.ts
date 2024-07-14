@@ -1,15 +1,14 @@
-import { Locator } from "puppeteer-core";
-import { JobResult, Routine } from "puppilot-routine-base";
+import { RoutineFunc } from "../types";
 import { xpath } from "../utils";
 
-class BCoin extends Routine {
-  static displayName = "B站年费大会员每月领取B币";
-  static id = "io.github.yuudi.puppilot-routines.bilibili-bcoin";
-  static version = "1.0.0";
-  static description =
-    "领取B站年费大会员每月赠送的B币，并记录下次领取时间，在这个时间前运行则跳过任务";
-  public async start(): Promise<JobResult> {
-    const store = await this.getStore();
+const bcoin: RoutineFunc = () => ({
+  displayName: "B站年费大会员每月领取B币",
+  id: "io.github.yuudi.puppilot-routines.bilibili-bcoin",
+  version: "1.0.0",
+  description:
+    "领取B站年费大会员每月赠送的B币，并记录下次领取时间，在这个时间前运行则跳过任务",
+  async start({ getPage, getStore }, { puppeteer }) {
+    const store = await getStore();
     const nextAvailableTime = await store.get<number>("nextAvailable");
     if (nextAvailableTime && nextAvailableTime > Date.now()) {
       return {
@@ -19,11 +18,14 @@ class BCoin extends Routine {
           new Date(nextAvailableTime).toLocaleString(),
       };
     }
-    const page = await this.getPage();
+    const page = await getPage();
     await page.goto("https://account.bilibili.com/account/big/myPackage");
     const signedIn = page.locator("div.user-con.signin").map(() => true);
     const notSignedIn = page.locator(".login__main").map(() => false);
-    const loginStatus = await Locator.race([signedIn, notSignedIn]).wait();
+    const loginStatus = await puppeteer.Locator.race([
+      signedIn,
+      notSignedIn,
+    ]).wait();
     if (!loginStatus) {
       return {
         status: "failed",
@@ -74,7 +76,7 @@ class BCoin extends Routine {
           status: "skipped",
           message: "B币已领取过，下次领取时间：" + nextAvailableDateText[0],
         };
-  }
-}
+  },
+});
 
-export default BCoin;
+export default bcoin;

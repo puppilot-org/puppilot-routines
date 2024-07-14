@@ -1,43 +1,48 @@
-import { JobResult, Routine } from "puppilot-routine-base";
+import { RoutineFunc } from "../types";
 
-class MyNewRoutine extends Routine {
-  // metadatas
-  static readonly displayName = "A New Routine";
-  static readonly version = "0.1.0";
-  // // optional metadatas
-  // static readonly timeLimit = 2 * 60_000; // 2 minute
-  // static readonly id = "io.github.<your-name>.<your-routine-id>"; // please follow java package naming convention
-  // static readonly author = "Your Name";
-  // static readonly reportEmail = "Your Email";
-  // static readonly reportUrl = "https://github.com/puppilot-org/puppilot-routines/issues/new/choose"; // or any other way to report issues
-  // static readonly description = `A new routine to do something, it helps you to do something, but it's not implemented yet`;
+const myNewRoutine: RoutineFunc = () => {
+  return {
+    // metadatas
+    displayName: "A New Routine",
+    version: "0.1.0",
+    id: "io.github.puppilot-org.puppilot-routines.<your-name>.<your-routine-id>", // please follow java package naming convention
 
-  public async start(): Promise<JobResult> {
-    // initialize the page
-    const page = await this.getPage();
+    // // optional metadatas
+    // timeLimit: 2 * 60_000, // 2 minute
+    // author: "Your Name",
+    // reportEmail: "Your Email",
+    // reportUrl:
+    //   "https://github.com/puppilot-org/puppilot-routines/issues/new/choose", // or any other way to report issues
+    // description: `A new routine to do something, it helps you to do something, but it's not implemented yet`,
 
-    // // go to the website
-    // await page.goto("https://github.com/");
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    start: async ({ getPage, getStore }, { puppeteer }) => {
+      // initialize the page
+      const page = await getPage();
 
-    // // click the sign in button
-    // await page.locator(".HeaderMenu-link--sign-in").click();
+      // // go to the website
+      // await page.goto("http://127.0.0.1/");
 
-    // // return accordingly
-    // return {
-    //   status: "failed",
-    //   message: "Not signed in",
-    // };
-    // return {
-    //   status: "completed",
-    //   message: "Starred the repository",
-    // };
+      // // click the check in button
+      // await page.locator("button.check-in").click();
 
-    await page.close();
-    return {
-      status: "skipped",
-      message: "Not implemented yet",
-    };
-  }
-}
+      // // return accordingly
+      // return {
+      //   status: "failed",
+      //   message: "Not signed in",
+      // };
+      // return {
+      //   status: "completed",
+      //   message: "Check in successfully",
+      // };
 
-export default MyNewRoutine;
+      await page.close();
+      return {
+        status: "skipped",
+        message: "Not implemented yet",
+      };
+    },
+  };
+};
+
+export default myNewRoutine;

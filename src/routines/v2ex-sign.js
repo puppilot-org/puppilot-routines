@@ -1,19 +1,26 @@
-import { Locator } from "puppeteer-core";
-import { Routine } from "puppilot-routine-base";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Routine } from "../types";
 
-class V2exSign extends Routine {
-  static displayName = "V2ex铜币领取";
-  static id = "io.github.yuudi.puppilot-routines.v2ex-sign";
-  static version = "1.0.0";
+/**
+ *
+ * @returns {Routine}
+ */
+const v2exSign = () => ({
+  displayName: "V2ex铜币领取",
+  id: "io.github.yuudi.puppilot-routines.v2ex-sign",
+  version: "1.0.0",
 
-  async start() {
-    const page = await this.getPage();
+  start: async ({ getPage }, { puppeteer }) => {
+    const page = await getPage();
     await page.goto("https://v2ex.com/mission/daily");
 
     const signedIn = page.locator('a[href="/settings"]').map(() => true);
     const notSignedIn = page.locator('a[href="/signin"]').map(() => false);
 
-    const loginStatus = await Locator.race([signedIn, notSignedIn]).wait();
+    const loginStatus = await puppeteer.Locator.race([
+      signedIn,
+      notSignedIn,
+    ]).wait();
     if (!loginStatus) {
       return {
         status: "failed",
@@ -41,7 +48,7 @@ class V2exSign extends Routine {
         message: "已领取",
       };
     }
-  }
-}
+  },
+});
 
-export default V2exSign;
+export default v2exSign;

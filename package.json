@@ -8,8 +8,7 @@
     "esbuild": "esbuild --minify --bundle --outdir=./dist/routines --target=node20 --format=esm --charset=utf8 --external:puppeteer-core --external:puppilot-routine-base"
   },
   "dependencies": {
-    "esbuild": "~0.23.0",
-    "puppilot-routine-base": "github:puppilot-org/puppilot-routine-base"
+    "esbuild": "~0.23.0"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
