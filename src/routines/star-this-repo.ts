@@ -31,7 +31,6 @@ const starThisRepo: RoutineFunc = () => {
         processAlreadyStarred(page),
         processUnstarred(page, store),
       ]);
-      // }
     },
   };
 };

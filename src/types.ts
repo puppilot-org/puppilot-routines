@@ -76,7 +76,10 @@ export interface Routine {
    */
   readonly timeLimit?: number;
   start(
-    sailer: { getPage(): Promise<puppeteer.Page>; getStore(): Promise<Store> },
+    sailer: {
+      getPage(): Promise<puppeteer.Page> | puppeteer.Page;
+      getStore(): Promise<Store> | Store;
+    },
     mods: { puppeteer: typeof puppeteer },
   ): Promise<Readonly<JobResult>>;
 }
