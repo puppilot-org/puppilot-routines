@@ -12,7 +12,7 @@ export default [
     },
   },
   pluginJs.configs.recommended,
-  ...tseslint.configs.strictTypeChecked,
+  ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
   eslintPluginPrettierRecommended,
 ];

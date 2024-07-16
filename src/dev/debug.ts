@@ -40,6 +40,7 @@ export async function main() {
     headless: false,
     defaultViewport: null,
     userDataDir,
+    devtools: process.env.DEV_TOOLS === "true",
     args: ["--profile-directory=Default"],
   });
 
@@ -47,18 +48,24 @@ export async function main() {
     routineFile,
   )) as { default: RoutineFunc };
   const routine = routineMod.default();
-  const result = await routine.start(
-    {
-      getPage() {
-        return browser.newPage();
+
+  try {
+    const result = await routine.start(
+      {
+        getPage() {
+          return browser.newPage();
+        },
+        getStore() {
+          return getStore(routine.id);
+        },
       },
-      getStore() {
-        return getStore(routine.id);
+      {
+        puppeteer,
       },
-    },
-    {
-      puppeteer,
-    },
-  );
-  console.log("Routine result:", result);
+    );
+    console.log("Routine result:", result);
+  } catch (error) {
+    console.error("Routine error:", error);
+    console.error((error as Error).stack);
+  }
 }
