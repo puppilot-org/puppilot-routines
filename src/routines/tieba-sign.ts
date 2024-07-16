@@ -1,4 +1,4 @@
-import { JobResult, RoutineFunc } from "../types";
+import { JobResult, JobStatus, RoutineFunc } from "../types";
 
 const tieba: RoutineFunc = () => ({
   displayName: "贴吧签到",
@@ -18,7 +18,7 @@ const tieba: RoutineFunc = () => ({
       const userinfo = await userinfoRes.text();
       if (!userinfo.includes("session_id")) {
         return {
-          status: "failed" as const,
+          status: JobStatus.Error,
           message: "需要登录",
         };
       }
@@ -29,7 +29,7 @@ const tieba: RoutineFunc = () => ({
       const bas = mylike.match(/href="\/f\?kw=[^"]+" title="([^"]+)"/g);
       if (!bas) {
         return {
-          status: "failed" as const,
+          status: JobStatus.Error,
           message: "获取关注的贴吧失败",
         };
       }
@@ -41,7 +41,7 @@ const tieba: RoutineFunc = () => ({
       const tbs: string = (await tbsRes.json())?.tbs;
       if (!tbs) {
         return {
-          status: "failed" as const,
+          status: JobStatus.Error,
           message: "获取tbs失败",
         };
       }
@@ -50,7 +50,7 @@ const tieba: RoutineFunc = () => ({
         const title = /href="\/f\?kw=[^"]+" title="([^"]+)"/.exec(ba);
         if (!title) {
           return {
-            status: "failed" as const,
+            status: JobStatus.Error,
             message: "获取贴吧标题失败",
           };
         }
@@ -63,7 +63,7 @@ const tieba: RoutineFunc = () => ({
       }
 
       return {
-        status: "completed" as const,
+        status: JobStatus.Success,
         message: "签到成功",
       };
     });

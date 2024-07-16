@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Routine } from "../types";
+import { JobStatus, Routine } from "../types";
 
 /**
  *
@@ -17,7 +17,7 @@ const miuiForum = () => ({
       waitUntil: "domcontentloaded",
     });
     return {
-      status: "completed",
+      status: JobStatus.Success,
       message: "签到成功",
     };
   },

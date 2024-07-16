@@ -1,4 +1,4 @@
-import { RoutineFunc } from "../types";
+import { JobStatus, RoutineFunc } from "../types";
 import { xpath } from "../utils";
 
 const bcoin: RoutineFunc = () => ({
@@ -12,7 +12,7 @@ const bcoin: RoutineFunc = () => ({
     const nextAvailableTime = await store.get<number>("nextAvailable");
     if (nextAvailableTime && nextAvailableTime > Date.now()) {
       return {
-        status: "skipped",
+        status: JobStatus.Dismissed,
         message:
           "B币已领取过，下次领取时间：" +
           new Date(nextAvailableTime).toLocaleString(),
@@ -28,7 +28,7 @@ const bcoin: RoutineFunc = () => ({
     ]).wait();
     if (!loginStatus) {
       return {
-        status: "failed",
+        status: JobStatus.Error,
         message: "Not signed in",
       };
     }
@@ -60,7 +60,7 @@ const bcoin: RoutineFunc = () => ({
     const nextAvailableDateText = /\d{4}\/\d{2}\/\d{2}/.exec(nextAvailableText);
     if (!nextAvailableDateText) {
       return {
-        status: "failed",
+        status: JobStatus.Error,
         message: "Failed to get next available date",
       };
     }
@@ -69,11 +69,11 @@ const bcoin: RoutineFunc = () => ({
 
     return couponGot
       ? {
-          status: "completed",
+          status: JobStatus.Success,
           message: "B币领取成功",
         }
       : {
-          status: "skipped",
+          status: JobStatus.Dismissed,
           message: "B币已领取过，下次领取时间：" + nextAvailableDateText[0],
         };
   },

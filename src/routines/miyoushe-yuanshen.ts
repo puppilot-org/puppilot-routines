@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { RoutineFunc } from "../types";
+import { JobStatus, RoutineFunc } from "../types";
 
 const Yuanshen: RoutineFunc = () => {
   return {
@@ -44,7 +44,7 @@ const Yuanshen: RoutineFunc = () => {
           | { data: null; message: string } = await roleRes.json();
         if (roleData.data === null) {
           return {
-            status: "failed" as const,
+            status: JobStatus.Error,
             message: roleData.message,
           };
         }
@@ -88,12 +88,12 @@ const Yuanshen: RoutineFunc = () => {
         // await page.close();
         if (messages.length > 0) {
           return {
-            status: "completed" as const,
+            status: JobStatus.Success,
             message: messages.join("\n"),
           };
         }
         return {
-          status: "failed" as const,
+          status: JobStatus.Warning,
           message: "No roles found",
         };
       }, deviceId);

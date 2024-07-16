@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Routine } from "../types";
+import { JobStatus, Routine } from "../types";
 
 /**
  *
@@ -23,7 +23,7 @@ const v2exSign = () => ({
     ]).wait();
     if (!loginStatus) {
       return {
-        status: "failed",
+        status: JobStatus.Error,
         message: "未登录",
       };
     }
@@ -39,12 +39,12 @@ const v2exSign = () => ({
     const result = await Promise.any([available$, unavailable$]);
     if (result) {
       return {
-        status: "completed",
+        status: JobStatus.Success,
         message: "领取成功",
       };
     } else {
       return {
-        status: "skipped",
+        status: JobStatus.Dismissed,
         message: "已领取",
       };
     }

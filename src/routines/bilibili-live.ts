@@ -1,4 +1,4 @@
-import { RoutineFunc } from "../types";
+import { JobStatus, RoutineFunc } from "../types";
 
 const biliLive: RoutineFunc = () => ({
   displayName: "bilibili直播签到",
@@ -12,7 +12,7 @@ const biliLive: RoutineFunc = () => ({
       waitUntil: "domcontentloaded",
     });
     return {
-      status: "completed",
+      status: JobStatus.Success,
       message: "签到成功",
     };
   },

@@ -1,5 +1,5 @@
 import { Page } from "puppeteer-core";
-import { RoutineFunc, Store } from "../types";
+import { JobStatus, RoutineFunc, Store } from "../types";
 
 const starThisRepo: RoutineFunc = () => {
   return {
@@ -15,7 +15,7 @@ const starThisRepo: RoutineFunc = () => {
       const starred = await store.get<boolean>("starred");
       if (starred) {
         return {
-          status: "skipped",
+          status: JobStatus.Dismissed,
           message: "Already starred the repository",
         };
       }
@@ -40,9 +40,9 @@ const processNotSignedIn = async (page: Page) => {
     visible: true,
   });
   return {
-    status: "failed",
+    status: JobStatus.Error,
     message: "Not signed in",
-  } as const;
+  };
 };
 
 const processAlreadyStarred = async (page: Page) => {
@@ -50,9 +50,9 @@ const processAlreadyStarred = async (page: Page) => {
     visible: true,
   });
   return {
-    status: "skipped",
+    status: JobStatus.Dismissed,
     message: "Already starred the repository",
-  } as const;
+  };
 };
 
 const processUnstarred = async (page: Page, store: Store) => {
@@ -72,7 +72,7 @@ const processUnstarred = async (page: Page, store: Store) => {
   await store.set("starred", true);
   // 🎉
   return {
-    status: "completed",
+    status: JobStatus.Success,
     message: "Starred the repository",
   } as const;
 };

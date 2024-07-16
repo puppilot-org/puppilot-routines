@@ -1,4 +1,4 @@
-import { RoutineFunc } from "../types";
+import { JobStatus, RoutineFunc } from "../types";
 
 const neteaseMusic: RoutineFunc = () => {
   return {
@@ -16,7 +16,7 @@ const neteaseMusic: RoutineFunc = () => {
         waitUntil: "domcontentloaded",
       });
       return {
-        status: "completed",
+        status: JobStatus.Success,
         message: "签到成功",
       };
     },

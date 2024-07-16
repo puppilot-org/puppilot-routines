@@ -1,4 +1,4 @@
-import { RoutineFunc } from "../types";
+import { JobStatus, RoutineFunc } from "../types";
 
 const myNewRoutine: RoutineFunc = () => {
   return {
@@ -28,17 +28,17 @@ const myNewRoutine: RoutineFunc = () => {
 
       // // return accordingly
       // return {
-      //   status: "failed",
+      //   status: JobStatus.Error,
       //   message: "Not signed in",
       // };
       // return {
-      //   status: "completed",
+      //   status: JobStatus.Success,
       //   message: "Check in successfully",
       // };
 
       await page.close();
       return {
-        status: "skipped",
+        status: JobStatus.Dismissed,
         message: "Not implemented yet",
       };
     },
