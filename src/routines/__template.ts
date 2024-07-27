@@ -1,6 +1,6 @@
-import { JobStatus, RoutineFunc } from "../types";
+import { JobStatus, Routine } from "../types";
 
-const myNewRoutine: RoutineFunc = () => {
+export default function (): Routine {
   return {
     // metadatas
     displayName: "A New Routine",
@@ -43,6 +43,4 @@ const myNewRoutine: RoutineFunc = () => {
       };
     },
   };
-};
-
-export default myNewRoutine;
+}
