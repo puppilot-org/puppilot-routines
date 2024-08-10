@@ -2,7 +2,7 @@
 
 set -ex
 
-rm -rf ./dist
+rm -rf ./dist/routines
 mkdir -p ./dist/routines
 
 routines=()

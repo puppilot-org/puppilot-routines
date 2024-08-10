@@ -16,7 +16,7 @@ export default function (): Routine {
     // description: `A new routine to do something, it helps you to do something, but it's not implemented yet`,
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    start: async ({ getPage, getStore }, { puppeteer }) => {
+    async start({ getPage, getStore }, { puppeteer }) {
       // initialize the page
       const page = await getPage();
 
